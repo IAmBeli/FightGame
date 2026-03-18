@@ -1,0 +1,17 @@
+#include"Mage.h"
+#include<iostream>
+#include<string>
+using namespace std;
+Mage::Mage(string n, int h, int d, int m) : Character(n, h, d), mana(m) {}
+void Mage::attack(Character& other){
+        if(mana >= 10){
+            cout << name << " casts a FIREBALL at " << other.getName() << "!" << endl;
+            int magicDamage = damage * 2;
+            other.takeDamage(magicDamage);
+            mana -= 10;
+            cout << "Mana left: " << mana << endl; 
+        }else{
+            cout << "Not enough mana! " << name << " hits weakly with a staff" << endl;
+            Character::attack(other);
+        }
+}

@@ -2,7 +2,7 @@
 #include<iostream>
 #include<string>
 using namespace std;
-Mage::Mage(string n, int h, int d, int m) : Character(n, h, d), mana(m) {}
+Mage::Mage(string n, int h, int d, int p, int m) : Character(n, h, d, p), mana(m) {}
 void Mage::attack(Character& other){
         if(mana >= 10){
             cout << name << " casts a FIREBALL at " << other.getName() << "!" << endl;

@@ -7,6 +7,6 @@ class Mage : public Character{
 private:
     int mana;
 public:
-    Mage(string n, int h, int d, int m);
+    Mage(string n, int h, int d, int p, int m);
     void attack(Character& other)override;
 };

@@ -7,6 +7,6 @@ class Warrior : public Character{
 private:
     int armor;
 public:
-    Warrior(string n, int h, int d, int a);
+    Warrior(string n, int h, int d, int p, int a);
     void takeDamage(int amount)override;
 };

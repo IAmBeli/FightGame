@@ -1,7 +1,7 @@
 #include"Character.h"
 #include<ctime>
 #include<cstdlib>
-Character::Character(string n, int h, int d, int p) : name(n), health(h), damage(d), potions(p), isDefending(false) {}
+Character::Character(string n, int h, int d, int p) : name(n), health(h), maxHealth(h), damage(d), potions(p), isDefending(false) {}
 void Character::takeDamage(int amount){
         if(isDefending){
             amount /= 2;
@@ -13,7 +13,7 @@ void Character::takeDamage(int amount){
     }
 void Character::healHP(int amount){
         health += amount;
-        if(health > 100) health = 100;
+        if(health > maxHealth) health = maxHealth;
         cout << name << " has healed " << amount << " HP. HP left: " << health << endl;
     }
 void Character::printStatus()const{
@@ -37,12 +37,16 @@ bool Character::isAlive() const{
 void Character::usePotion(){
         if(potions > 0){
             cout << name << " drinks a healing potion..." << endl;
-            healHP(30);
+            healHP(50);
             potions--;
             cout << "Potions left: " << potions << endl;
         }else{
             cout << name << " reaches for the potion, but the bag empty" << endl;
         }
+}
+void Character::addPotion(int count){
+    potions += count;
+    cout << name << " found " << count << " potion(s)! Total potions: " << potions << endl;
 }
 void Character::defend(){
     isDefending = true;

@@ -6,6 +6,7 @@ class Character{
 protected:
     string name;
     int health;
+    int maxHealth;
     int damage;
     int potions;
     bool isDefending;
@@ -17,6 +18,7 @@ public:
     virtual void attack(Character& other);
     bool isAlive() const;
     void usePotion();
+    void addPotion(int count);
     void defend();
     void resetDefense();
     string getName()const;

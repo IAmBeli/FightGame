@@ -15,3 +15,8 @@ void Mage::attack(Character& other){
             Character::attack(other);
         }
 }
+void Mage::restoreMana(int amount){
+    mana += amount;
+    if(mana > 40) mana = 40;
+    cout << name << " meditated and restored " << amount << " mana! Current mana: " << mana << endl;
+}

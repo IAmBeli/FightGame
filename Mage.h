@@ -9,4 +9,5 @@ private:
 public:
     Mage(string n, int h, int d, int p, int m);
     void attack(Character& other)override;
+    void restoreMana(int amount);
 };

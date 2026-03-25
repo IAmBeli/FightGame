@@ -6,8 +6,10 @@ using namespace std;
 class Mage : public Character{
 private:
     int mana;
+    int maxMana;
 public:
     Mage(string n, int h, int d, int p, int m);
     void attack(Character& other)override;
     void restoreMana(int amount);
+    void triggerResonance()override;
 };

@@ -56,6 +56,8 @@ int main(){
             break; 
         }else{
             cout << "\n" << enemy.getName() << " is dead! You take a quick breath." << endl;
+            int reward = (enemy.getDamage() * 2) + (enemy.getHealth() / 2);
+            hero.gainEchoes(reward);
             hero.healHP(20);
             hero.restoreMana(15);
             if(enemy.getPotions() > 0){

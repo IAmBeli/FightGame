@@ -2,7 +2,7 @@
 #include<iostream>
 #include<string>
 using namespace std;
-Mage::Mage(string n, int h, int d, int p, int m) : Character(n, h, d, p), mana(m) {}
+Mage::Mage(string n, int h, int d, int p, int m) : Character(n, h, d, p), mana(m), maxMana(m) {}
 void Mage::attack(Character& other){
         if(mana >= 10){
             cout << name << " casts a FIREBALL at " << other.getName() << "!" << endl;
@@ -17,6 +17,12 @@ void Mage::attack(Character& other){
 }
 void Mage::restoreMana(int amount){
     mana += amount;
-    if(mana > 40) mana = 40;
+    if(mana > maxMana) mana = maxMana;
     cout << name << " meditated and restored " << amount << " mana! Current mana: " << mana << endl;
+}
+void Mage::triggerResonance(){
+    Character::triggerResonance();
+    maxMana += 15;
+    mana = maxMana;
+    cout << "Your magic abilities are increasing. Max mana: " << maxMana << endl;
 }

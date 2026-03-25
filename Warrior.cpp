@@ -11,3 +11,9 @@ void Warrior::takeDamage(int amount){
         Character::takeDamage(amount);
     }
 }
+void Warrior::triggerResonance(){
+    triggerResonance();
+    armor += 5;
+    cout << "Steel responds to your call. Armor is upgraded: " << armor << endl;
+    cout << "Now you feel attacks of enemies like light touches" << endl;
+}

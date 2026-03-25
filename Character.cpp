@@ -1,8 +1,12 @@
 #include"Character.h"
 #include<ctime>
 #include<cstdlib>
+#include<cmath>
 Character::Character(string n, int h, int d, int p) : name(n), health(h), maxHealth(h), damage(d), potions(p), isDefending(false) {}
 void Character::takeDamage(int amount){
+        if((rand % 100) < dodgeChance){
+            cout << "[ Miss! ] " << name << " gracefully dodged the attack!" << endl; 
+        }
         if(isDefending){
             amount /= 2;
             cout << "Shield blocked half of the damage!" << endl;
@@ -24,7 +28,7 @@ void Character::printStatus()const{
     }
 void Character::attack(Character& other){
         int randomDamage = (damage - 5) + (rand() % 11);
-        if((rand() % 10) < 2){
+        if((rand() % 100) < critChance){
             randomDamage *= 2;
             cout << "CRITICAL HIT!" << endl;
         }
@@ -54,6 +58,23 @@ void Character::defend(){
 }
 void Character::resetDefense(){
     isDefending = false;
+}
+void Character::gainEchoes(int amount){
+    currentEchoes += amount;
+    cout << "\n[ + " << amount << " shards of essence ]" << endl;
+    while(currentEchoes >= echoesToNextLevel){
+        triggerResonance();
+    }
+}
+void Character::triggerResonance(){
+    currentEchoes -= echoesToNextLevel;
+    level++;
+    maxHealth += 20;
+    health = maxHealth;
+    damage += 5;
+    echoesToNextLevel = static_cast<int>(100 * pow(level, 1.5));
+    cout << "\n>>> Resonance: level " << level << " <<<" << endl;
+    cout << "Your essence is stregthening. Your HP and damage increased!" << endl;
 }
 string Character::getName()const{return name;}
 int Character::getHealth()const{return health;}

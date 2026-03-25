@@ -9,4 +9,5 @@ private:
 public:
     Warrior(string n, int h, int d, int p, int a);
     void takeDamage(int amount)override;
+    void triggerResonance()override;
 };

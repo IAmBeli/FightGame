@@ -10,6 +10,11 @@ protected:
     int damage;
     int potions;
     bool isDefending;
+    int level = 1;
+    int currentEchoes = 0;
+    int echoesToNextLevel = 100;
+    int critChance = 15;
+    int dodgeChance = 10;
 public:
     Character(string n, int h, int d, int p);  
     virtual void takeDamage(int amount);
@@ -21,6 +26,8 @@ public:
     void addPotion(int count);
     void defend();
     void resetDefense();
+    void gainEchoes(int amount);
+    virtual void triggerResonance();
     string getName()const;
     int getHealth()const;
     int getDamage()const;

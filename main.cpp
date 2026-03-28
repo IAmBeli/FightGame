@@ -6,23 +6,50 @@
 #include"Mage.h"
 #include"Warrior.h"
 using namespace std;
+void visitMerchant(Character& hero){
+    int choice;
+    while(true){
+        cout << "\n===== Merchant shop =====" << endl;
+        cout << "Your gold " << hero.getGold() << endl;
+        cout << "1. Healing potion(50 gold)" << endl;
+        cout << "2. Magic sharpening(+5 to DMG)(100 gold)" << endl;
+        cout << "3. Leave merchant shop" << endl;
+        cout << "Your choice: ";
+        cin >> choice;
+        if(choice == 1){
+            if(hero.spendGold(50)){
+                hero.addPotion(1);
+            }else{
+                cout << "Not enough gold" << endl;
+            }
+        }else if(choice == 2){
+            if(hero.spendGold(100)){
+                cout << "Your weapon sharpened!" << endl;
+                hero.increaseDamage(5);
+            }else{
+                cout << "Not enough gold" << endl;
+            }
+        }else if(choice == 3){
+            break;
+        }
+    }
+}
 int main(){
     srand(time(0));
     Mage hero("Beli (Mage)", 130, 20, 3, 30);
-    vector<Warrior> arenaEnemies;
-    arenaEnemies.push_back(Warrior("Goblin scavanger", 60, 10, 0, 2));
-    arenaEnemies.push_back(Warrior("Orc bruiser", 100, 15, 1, 5));
-    arenaEnemies.push_back(Warrior("Troll boss", 150, 25, 2, 10));
     cout << "===================" << endl;
     cout << "-- Battle begins --" << endl;
     cout << "===================" << endl;
     int wave = 1;
-    for(Warrior& enemy : arenaEnemies){
-        cout << "\n==============================" << endl;
-        cout << "Wave " << wave << ": " << enemy.getName() << " approaches!" << endl;
-        cout << "==============================" << endl;
-        while(hero.isAlive() && enemy.isAlive()){
-            hero.resetDefense();
+    while(hero.isAlive()){
+        string enemyName = "Dark shadow lvl " + to_string(wave);
+        int enemyHP = 50 + (wave * 15);
+        int enemyDMG = 8 + (wave * 3);
+        Warrior enemy(enemyName, enemyHP, enemyDMG, 0, 2 + wave);
+        cout << "\n--- Wave " << wave << " ---" << endl;
+        cout << enemyName << " Stands in front of you!" << endl;
+    while(hero.isAlive() && enemy.isAlive()){
+        hero.resetDefense();
             cout << "\n=== Your turn! ===" << endl;
             hero.printStatus();
             cout << "1: Attack / Cast spell" << endl;
@@ -50,29 +77,23 @@ int main(){
                     enemy.attack(hero);
                 }
             }
-        }
-        if(!hero.isAlive()){
-            cout << "\n" << hero.getName() << " was defeated on wave "  << wave << "..." << endl;
-            break; 
-        }else{
-            cout << "\n" << enemy.getName() << " is dead! You take a quick breath." << endl;
-            int reward = (enemy.getDamage() * 2) + (enemy.getHealth() / 2);
-            hero.gainEchoes(reward);
-            hero.healHP(20);
-            hero.restoreMana(15);
-            if(enemy.getPotions() > 0){
-                cout << "You search the body and find a potion!" << endl;
-                hero.addPotion(enemy.getPotions());
-            }else{
-                hero.addPotion(1);
-            }
-            wave++;
-        }
     }
     if(hero.isAlive()){
-        cout << "\n==============================" << endl;
-        cout << "Incredible " << hero.getName() << " has cleared the arena!" << endl;
-        cout << "==============================" << endl;
+        cout << "\nYou won " << enemyName << "! You earned some gold and gained experience" << endl;
+        int xpReward = 50 + (wave * 20);
+        int goldReward = 10 + (wave * 5);
+        hero.gainEchoes(xpReward);
+        hero.addGold(goldReward);
+        cout << "Gold received: " << goldReward << " (Total: " << hero.getGold() << ")" << endl;
+        visitMerchant(hero);
+        wave++;
     }
-    return 0;
+}
+if(!hero.isAlive()){
+    cout << "\n==================" << endl;
+    cout << "      GAME OVER     " << endl;
+    cout << "==================" << endl;
+    cout << "Final wave: " << wave << endl;
+    cout << "Final level: " << hero.getLevel() << endl;
+}
 }

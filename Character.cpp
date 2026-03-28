@@ -20,6 +20,9 @@ void Character::healHP(int amount){
         if(health > maxHealth) health = maxHealth;
         cout << name << " has healed " << amount << " HP. HP left: " << health << endl;
     }
+void Character::increaseDamage(int amount){
+    damage += amount;
+}
 void Character::printStatus()const{
         cout << "***** "<< name << " current status is: *****" << endl;
         cout << "Name: " << name << endl;
@@ -76,7 +79,19 @@ void Character::triggerResonance(){
     cout << "\n>>> Resonance: level " << level << " <<<" << endl;
     cout << "Your essence is stregthening. Your HP and damage increased!" << endl;
 }
+void Character::addGold(int amount){
+    gold += amount;
+}
+bool Character::spendGold(int amount){
+    if(gold > amount){
+        gold -= amount;
+        return true;
+    }
+    return false;
+}
+int Character::getGold()const{return gold;}
 string Character::getName()const{return name;}
 int Character::getHealth()const{return health;}
 int Character::getDamage()const{return damage;}
 int Character::getPotions()const{return potions;}
+int Character::getLevel()const{return level;}

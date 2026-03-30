@@ -4,7 +4,7 @@
 #include<cmath>
 Character::Character(string n, int h, int d, int p) : name(n), health(h), maxHealth(h), damage(d), potions(p), isDefending(false) {}
 void Character::takeDamage(int amount){
-        if((rand % 100) < dodgeChance){
+        if((rand() % 100) < dodgeChance){
             cout << "[ Miss! ] " << name << " gracefully dodged the attack!" << endl; 
         }
         if(isDefending){
@@ -83,11 +83,40 @@ void Character::addGold(int amount){
     gold += amount;
 }
 bool Character::spendGold(int amount){
-    if(gold > amount){
+    if(gold >= amount){
         gold -= amount;
         return true;
     }
     return false;
+}
+void Character::saveProgress(const string& filename){
+    ofstream outFile(filename);
+    if(outFile.is_open()){
+        outFile << name << endl;
+        outFile << level << endl;
+        outFile << gold << endl;
+        outFile << maxHealth << endl;
+        outFile << damage << endl;
+        outFile.close();
+        cout << "Progress is saved to " << filename << endl;
+    }else{
+        cout << "Error: could not save progress" << endl;
+    }
+}
+void Character::loadProgress(const string& filename){
+    ifstream inFile(filename);
+    if(inFile.is_open()){
+        getline(inFile, name);
+        inFile >> level;
+        inFile >> gold;
+        inFile >> maxHealth;
+        inFile >> damage;
+        health = maxHealth;
+        inFile.close();
+        cout << "Progress loaded! Welcome back, " << name << endl;
+    }else{
+        cout << "Save filenot found. Starting new game..." << endl;
+    }
 }
 int Character::getGold()const{return gold;}
 string Character::getName()const{return name;}

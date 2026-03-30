@@ -1,4 +1,5 @@
 #pragma once
+#include<fstream>
 #include<iostream>
 #include<string>
 using namespace std;
@@ -32,6 +33,8 @@ public:
     virtual void triggerResonance();
     void addGold(int amount);
     bool spendGold(int amount);
+    void saveProgress(const string& filename);
+    void loadProgress(const string& filename);
     int getGold()const;
     string getName()const;
     int getHealth()const;

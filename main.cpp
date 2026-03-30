@@ -1,3 +1,4 @@
+#include<fstream>
 #include<iostream>
 #include<string>
 #include<ctime>
@@ -37,6 +38,13 @@ void visitMerchant(Character& hero){
 int main(){
     srand(time(0));
     Mage hero("Beli (Mage)", 130, 20, 3, 30);
+    cout << "1. New game" << endl;
+    cout << "2. Load game" << endl;
+    int startChoice;
+    cin >> startChoice;
+    if(startChoice == 2){
+        hero.loadProgress("savegame.txt");
+    }
     cout << "===================" << endl;
     cout << "-- Battle begins --" << endl;
     cout << "===================" << endl;
@@ -45,7 +53,7 @@ int main(){
         string enemyName = "Dark shadow lvl " + to_string(wave);
         int enemyHP = 50 + (wave * 15);
         int enemyDMG = 8 + (wave * 3);
-        Warrior enemy(enemyName, enemyHP, enemyDMG, 0, 2 + wave);
+        Warrior enemy(enemyName, enemyHP, enemyDMG, 1, 2 + wave);
         cout << "\n--- Wave " << wave << " ---" << endl;
         cout << enemyName << " Stands in front of you!" << endl;
     while(hero.isAlive() && enemy.isAlive()){
@@ -87,6 +95,12 @@ int main(){
         cout << "Gold received: " << goldReward << " (Total: " << hero.getGold() << ")" << endl;
         visitMerchant(hero);
         wave++;
+        cout << "Do you want to save your progress?(1 - yes, 0 - no): ";
+        int saveChoice;
+        cin >> saveChoice;
+        if(saveChoice == 1){
+            hero.saveProgress("savegame.txt");
+        }
     }
 }
 if(!hero.isAlive()){
@@ -95,5 +109,7 @@ if(!hero.isAlive()){
     cout << "==================" << endl;
     cout << "Final wave: " << wave << endl;
     cout << "Final level: " << hero.getLevel() << endl;
+    cout << "Thanks for playing" << endl;
 }
+return 0;
 }
